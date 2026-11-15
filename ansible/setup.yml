@@ -1,0 +1,32 @@
+---
+- name: DevOpsX 2.0 Environment Setup
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Display project information
+      debug:
+        msg: "DevOpsX 2.0 Ansible provisioning started"
+
+    - name: Check Docker availability
+      command: docker --version
+      register: docker_output
+      changed_when: false
+
+    - name: Display Docker version
+      debug:
+        var: docker_output.stdout
+
+    - name: Check Kubernetes availability
+      command: kubectl version --client
+      register: kubectl_output
+      changed_when: false
+
+    - name: Display Kubernetes version
+      debug:
+        var: kubectl_output.stdout
+
+    - name: Display completion message
+      debug:
+        msg: "DevOpsX 2.0 environment verification completed successfully"
