@@ -2,6 +2,10 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON = 'C:\\Users\\sindh\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -13,22 +17,22 @@ pipeline {
         stage('Setup Python') {
             steps {
                 echo 'Checking Python installation...'
-                bat 'python --version'
-                bat 'pip --version'
+                bat '"%PYTHON%" --version'
+                bat '"%PYTHON%" -m pip --version'
             }
         }
 
         stage('Install Dependencies') {
             steps {
                 echo 'Installing project dependencies...'
-                bat 'python -m pip install -r requirements.txt'
+                bat '"%PYTHON%" -m pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Running DevOpsX 2.0 tests...'
-                bat 'python -m pytest -v'
+                bat '"%PYTHON%" -m pytest -v'
             }
         }
     }
