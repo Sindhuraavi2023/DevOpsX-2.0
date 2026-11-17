@@ -1,0 +1,11 @@
+groups:
+  - name: devopsx-alerts
+    rules:
+      - alert: DevOpsXAppDown
+        expr: up{job="devopsx-flask-app"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "DevOpsX Flask application is down"
+          description: "The DevOpsX application has been unreachable for more than one minute."

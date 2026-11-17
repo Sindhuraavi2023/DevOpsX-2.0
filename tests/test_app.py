@@ -18,3 +18,11 @@ def test_version():
     response = client.get("/version")
     assert response.status_code == 200
     assert response.json["version"] == "1.0.0"
+    
+def test_metrics():
+    client = app.test_client()
+    client.get("/")
+    response = client.get("/metrics")
+
+    assert response.status_code == 200
+    assert b"devopsx_http_requests_total" in response.data
