@@ -10,3 +10,8 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets: ["devopsx-app:5000"]
+
+  - job_name: "devopsx-kubernetes-app"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["host.docker.internal:30080"]
