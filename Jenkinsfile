@@ -29,6 +29,13 @@ pipeline {
             }
         }
 
+        stage('Docker Connectivity Check') {
+            steps {
+                 echo 'Checking Docker access from Jenkins...'
+                   bat 'docker version'
+            }
+        }
+
         stage('Run Tests') {
             steps {
                 echo 'Running DevOpsX 2.0 tests...'

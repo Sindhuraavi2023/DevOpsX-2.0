@@ -1,3 +1,4 @@
+
 services:
   devopsx-app:
     build: .
@@ -9,11 +10,15 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: devopsx-prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
     ports:
       - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
     depends_on:
       - devopsx-app
     restart: unless-stopped
@@ -26,6 +31,14 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: devopsxadmin
+    volumes:
+      - grafana_data:/var/lib/grafana
     depends_on:
       - prometheus
     restart: unless-stopped
+
+volumes:
+  prometheus_data:
+    external: true
+    name: 75f6887ba87e12e044cf8092e1bac229edb595cc918586b4ab4550b9b337e95e
+  grafana_data:
