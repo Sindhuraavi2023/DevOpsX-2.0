@@ -4,6 +4,7 @@ pipeline {
 
     environment {
         PYTHON = 'C:\\Users\\sindh\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+        DOCKER_IMAGE = 'devopsx-app:1.2'
     }
 
     stages {
@@ -31,8 +32,16 @@ pipeline {
 
         stage('Docker Connectivity Check') {
             steps {
-                 echo 'Checking Docker access from Jenkins...'
-                   bat 'docker version'
+                echo 'Checking Docker access from Jenkins...'
+                bat 'docker version'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building DevOpsX 2.0 Docker image...'
+                bat 'docker build -t %DOCKER_IMAGE% .'
+                bat 'docker images %DOCKER_IMAGE%'
             }
         }
 
